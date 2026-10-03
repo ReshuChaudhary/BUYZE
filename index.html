@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BUYZY - Fashion Store</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo" onclick="showPage('home')">BUYZY</div>
+
+    <div class="search-box">
+
+        <input type="text" id="searchInput" placeholder="Search dresses, tops, shoes...">
+
+        <button onclick="searchProducts()">🔍</button>
+
+    </div>
+
+    <div class="nav-actions">
+
+        <button onclick="showPage('account')">👤 Account</button>
+
+        <button onclick="showPage('wishlist')">♡ Wishlist <span id="wishCount">0</span></button>
+
+        <button onclick="showPage('cart')">🛒 Cart <span id="cartCount">0</span></button>
+
+    </div>
+
+</header>
+
+<nav class="category-bar">
+
+    <button onclick="filterProducts('all')">All</button>
+
+    <button onclick="filterProducts('beauty')">Beauty</button>
+
+    <button onclick="filterProducts('fragrances')">Fragrances</button>
+
+    <button onclick="filterProducts('furniture')">Lifestyle</button>
+
+    <button onclick="filterProducts('groceries')">Trending</button>
+
+</nav>
+
+<main>
+
+    <!-- HOME -->
+
+    <section id="homePage" class="page active">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="small-title">WELCOME TO BUYZY</p>
+
+                <h1>
+
+                    Discover Your
+
+                    <br>
+
+                    Perfect Style
+
+                </h1>
+
+                <p>
+
+                    Explore products you love, save your favourites
+
+                    and shop everything in one place.
+
+                </p>
+
+                <button class="primary-btn" onclick="scrollToProducts()">
+
+                    Shop Now →
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <section class="products-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <p>EXPLORE</p>
+
+                    <h2>Discover Products</h2>
+
+                </div>
+
+                <span id="resultText">Products</span>
+
+            </div>
+
+            <div id="loading" class="loading">
+
+                Loading products...
+
+            </div>
+
+            <div id="productContainer" class="product-grid"></div>
+
+        </section>
+
+    </section>
+
+    <!-- PRODUCT DETAILS -->
+
+    <section id="productPage" class="page">
+
+        <button class="back-btn" onclick="showPage('home')">
+
+            ← Back to Shopping
+
+        </button>
+
+        <div id="productDetails"></div>
+
+    </section>
+
+    <!-- WISHLIST -->
+
+    <section id="wishlistPage" class="page">
+
+        <div class="page-heading">
+
+            <p>YOUR FAVOURITES</p>
+
+            <h2>Wishlist ♡</h2>
+
+        </div>
+
+        <div id="wishlistContainer" class="product-grid"></div>
+
+    </section>
+
+    <!-- CART -->
+
+    <section id="cartPage" class="page">
+
+        <div class="page-heading">
+
+            <p>YOUR SHOPPING BAG</p>
+
+            <h2>Shopping Cart 🛒</h2>
+
+        </div>
+
+        <div id="cartContainer"></div>
+
+    </section>
+
+    <!-- ACCOUNT -->
+
+    <section id="accountPage" class="page">
+
+        <div class="account-box">
+
+            <div class="page-heading">
+
+                <p>WELCOME TO BUYZY</p>
+
+                <h2>My Account</h2>
+
+            </div>
+
+            <div id="accountContent"></div>
+
+        </div>
+
+    </section>
+
+    <!-- CHECKOUT -->
+
+    <section id="checkoutPage" class="page">
+
+        <div class="page-heading">
+
+            <p>ALMOST THERE</p>
+
+            <h2>Checkout</h2>
+
+        </div>
+
+        <div class="checkout-layout">
+
+            <div class="checkout-form">
+
+                <h3>Delivery Address</h3>
+
+                <input id="fullName" type="text" placeholder="Full Name">
+
+                <input id="phone" type="text" placeholder="Phone Number">
+
+                <input id="address" type="text" placeholder="Address">
+
+                <input id="city" type="text" placeholder="City">
+
+                <input id="state" type="text" placeholder="State">
+
+                <input id="pincode" type="text" placeholder="Pincode">
+
+                <h3>Payment Method</h3>
+
+                <label class="payment-option">
+
+                    <input type="radio" name="payment" value="COD" checked>
+
+                    Cash on Delivery
+
+                </label>
+
+                <label class="payment-option">
+
+                    <input type="radio" name="payment" value="UPI">
+
+                    UPI / Online Payment
+
+                </label>
+
+                <button class="primary-btn full-btn" onclick="placeOrder()">
+
+                    Place Order
+
+                </button>
+
+            </div>
+
+            <div class="checkout-summary">
+
+                <h3>Order Summary</h3>
+
+                <div id="checkoutItems"></div>
+
+                <div class="summary-total">
+
+                    <span>Total</span>
+
+                    <strong id="checkoutTotal">₹0</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ORDER CONFIRMATION -->
+
+    <section id="orderPage" class="page">
+
+        <div class="success-box">
+
+            <div class="success-icon">✓</div>
+
+            <h2>Order Confirmed!</h2>
+
+            <p>
+
+                Thank you for shopping with BUYZY.
+
+            </p>
+
+            <p id="orderNumber"></p>
+
+            <button class="primary-btn" onclick="showPage('orders')">
+
+                View My Orders
+
+            </button>
+
+            <button class="secondary-btn" onclick="showPage('home')">
+
+                Continue Shopping
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ORDERS -->
+
+    <section id="ordersPage" class="page">
+
+        <div class="page-heading">
+
+            <p>YOUR PURCHASES</p>
+
+            <h2>My Orders 📦</h2>
+
+        </div>
+
+        <div id="ordersContainer"></div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <div class="footer-logo">BUYZY</div>
+
+    <p>Discover. Save. Shop.</p>
+
+    <p>© 2026 BUYZY. All rights reserved.</p>
+
+</footer>
+
+<div id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
